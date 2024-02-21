@@ -46,7 +46,9 @@ const TaskCard = ({ task }: TaskCardProps) => {
 					</form>
 					<form
 						action={async () => {
+              setPending(true);
 							await updateTaskStatus(task.id, "Completed");
+              setPending(false);
 						}}
 					>
 						<Button
