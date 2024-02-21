@@ -15,7 +15,7 @@ const updateTaskStatus = async (id: number, status: Database['public']['Enums'][
 
   // take the current timestamp and convert to a date string
   const now = new Date().toUTCString()
-  console.log({now})
+
 
 
   const { data, error } = await supabase.from("tasks").update({ status: status, updated_at:now }).eq("id", id).single()
