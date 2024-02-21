@@ -21,20 +21,24 @@ const TaskCard = ({ task }: TaskCardProps) => {
 
 
 	return (
-		<Card className={cn("bg-slate-100",
-      pending ? "opacity-50 animate-pulse" : "opacity-100"
-    )} draggable={true} id={`${task.id}`}>
+		<Card
+			className={cn(
+				"bg-slate-100",
+				pending ? "opacity-50 animate-pulse" : "opacity-100",
+			)}
+			draggable={true}
+			id={`${task.id}`}
+		>
 			<CardHeader className="flex items-center justify-between flex-row-reverse">
 				<div className="flex space-x-2 w-full justify-end items-end">
-					<form
-						action={async () => {
-							setPending(true);
-							await updateTaskStatus(task.id, "In Progress");
-							setPending(false);
-						}}
-					>
+					<form>
 						<Button
-							type="submit"
+							onClick={async () => {
+								setPending(true);
+								await updateTaskStatus(task.id, "In Progress");
+								setPending(false);
+							}}
+							type="button"
 							variant="outline"
 							className="bg-sky-600 text-white"
 							size="icon"
@@ -44,24 +48,21 @@ const TaskCard = ({ task }: TaskCardProps) => {
 							<HourglassIcon size={24} />
 						</Button>
 					</form>
-					<form
-						action={async () => {
-              setPending(true);
+					<Button
+						onClick={async () => {
+							setPending(true);
 							await updateTaskStatus(task.id, "Completed");
-              setPending(false);
+							setPending(false);
 						}}
+						type="button"
+						variant="outline"
+						className="bg-green-600 text-white"
+						size="icon"
+						aria-disabled={pending}
+						disabled={pending}
 					>
-						<Button
-							type="submit"
-							variant="outline"
-							className="bg-green-600 text-white"
-							size="icon"
-							aria-disabled={pending}
-							disabled={pending}
-						>
-							<CheckIcon size={24} />
-						</Button>
-					</form>
+						<CheckIcon size={24} />
+					</Button>
 				</div>
 				<CardTitle>{task.title}</CardTitle>
 			</CardHeader>
