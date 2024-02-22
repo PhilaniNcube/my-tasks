@@ -8,6 +8,8 @@ import TaskCard from "./task-card";
 import { useMemo } from "react";
 import { useTaskStore } from "@/stores/taskStore";
 import { createClient } from "@/utils/supabase/client";
+import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 
 type ColumnProps = {
 	status: Database["public"]["Enums"]["Status"];
@@ -16,6 +18,8 @@ type ColumnProps = {
 };
 
 const Column = ({ status, tasks }: ColumnProps) => {
+
+  const router = useRouter()
 
   //use the supabase client
   const supabase = createClient()
@@ -35,7 +39,7 @@ const Column = ({ status, tasks }: ColumnProps) => {
     updateTaskStatus(draggedTask, status);
     await supabase.from("tasks").update({status}).eq("id", draggedTask)
     dragTask(null)
-    window.location.reload()
+    router.refresh()
   }
 
 	return (
