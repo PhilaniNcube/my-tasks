@@ -21,18 +21,20 @@ const TaskCard = ({ task }: TaskCardProps) => {
   const [pending, setPending] = useState(false)
 
   const dragTask = useTaskStore(state => state.dragTask)
+  const draggedTask = useTaskStore(state => state.draggedTask)
 
 
 	return (
 		<Card
 			className={cn(
 				"bg-slate-100 border-2",
-				pending ? "opacity-50 animate-pulse" : "opacity-100",
+				draggedTask === task.id ? "opacity-50 animate-pulse pointer-events-none" : "opacity-100",
 				task.status === "Completed"
 					? "border-green-600"
 					: task.status === "In Progress"
 					  ? "border-sky-600"
 					  : "border-orange-300",
+
 			)}
 			draggable={true}
       onDrag={() => dragTask(task.id)}
