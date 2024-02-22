@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Database } from "@/schema";
+import { useTaskStore } from "@/stores/taskStore";
 import { format } from "date-fns";
 import { CheckIcon, HourglassIcon } from "lucide-react";
 import { useOptimistic, useState } from "react";
@@ -19,35 +20,45 @@ const TaskCard = ({ task }: TaskCardProps) => {
 
   const [pending, setPending] = useState(false)
 
+  const dragTask = useTaskStore(state => state.dragTask)
+
 
 	return (
 		<Card
 			className={cn(
-				"bg-slate-100",
+				"bg-slate-100 border-2",
 				pending ? "opacity-50 animate-pulse" : "opacity-100",
+				task.status === "Completed"
+					? "border-green-600"
+					: task.status === "In Progress"
+					  ? "border-sky-600"
+					  : "border-orange-300",
 			)}
 			draggable={true}
+      onDrag={() => dragTask(task.id)}
 			id={`${task.id}`}
 		>
-			<CardHeader className="flex items-center justify-between flex-row-reverse">
+			<CardHeader
+				className={cn(
+					"",
+				)}
+			>
 				<div className="flex space-x-2 w-full justify-end items-end">
-					<form>
-						<Button
-							onClick={async () => {
-								setPending(true);
-								await updateTaskStatus(task.id, "In Progress");
-								setPending(false);
-							}}
-							type="button"
-							variant="outline"
-							className="bg-sky-600 text-white"
-							size="icon"
-							aria-disabled={pending}
-							disabled={pending}
-						>
-							<HourglassIcon size={24} />
-						</Button>
-					</form>
+					<Button
+						onClick={async () => {
+							setPending(true);
+							await updateTaskStatus(task.id, "In Progress");
+							setPending(false);
+						}}
+						type="button"
+						variant="outline"
+						className="bg-sky-600 text-white"
+						size="icon"
+						aria-disabled={pending}
+						disabled={pending}
+					>
+						<HourglassIcon size={24} />
+					</Button>
 					<Button
 						onClick={async () => {
 							setPending(true);
@@ -64,10 +75,10 @@ const TaskCard = ({ task }: TaskCardProps) => {
 						<CheckIcon size={24} />
 					</Button>
 				</div>
-				<CardTitle>{task.title}</CardTitle>
+				<CardTitle className="text-lg">{task.title}</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<p className="text-lg">{task.description}</p>
+				<p className="text-sm">{task.description}</p>
 			</CardContent>
 			<CardFooter>
 				{task.updated_at ? (
