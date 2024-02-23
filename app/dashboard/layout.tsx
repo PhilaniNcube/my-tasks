@@ -54,6 +54,12 @@ const layout = async ({children}:{children: ReactNode}) => {
 							>
 								Tasks
 							</Link>
+							<Link
+								href="/dashboard/projects"
+								className="px-4 py-2 font-medium"
+							>
+								Projects
+							</Link>
 						</nav>
 					</aside>
 					<ScrollArea className="w-full">
