@@ -35,9 +35,10 @@ const Column = ({ status, tasks }: ColumnProps) => {
   const dragTask = useTaskStore(state => state.dragTask)
 
   const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+    const now = new Date().toUTCString();
     if(!draggedTask) return;
     updateTaskStatus(draggedTask, status);
-    await supabase.from("tasks").update({status}).eq("id", draggedTask)
+    await supabase.from("tasks").update({status, updated_at:now}).eq("id", draggedTask)
     dragTask(null)
     router.refresh()
   }

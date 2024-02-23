@@ -83,7 +83,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
 				<p className="text-sm">{task.description}</p>
 			</CardContent>
 			<CardFooter>
-				{task.updated_at ? (
+				{task.updated_at !== null ? (
 					<small>Updated On: {format(task.updated_at, "Pp")}</small>
 				) : (
 					<small>Created On: {format(task.created_at, "Pp")}</small>
