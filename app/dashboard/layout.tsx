@@ -8,6 +8,7 @@ import { createClient } from "@/utils/supabase/server";
 import signOut from "@/action/auth/sign-out";
 import SignIn from "@/components/auth/sign-in";
 import { ArrowBigRightIcon } from "lucide-react";
+import CreateProject from "./(projects)/new-project";
 
 const layout = async ({children}:{children: ReactNode}) => {
   const cookieStore = cookies()
@@ -32,6 +33,7 @@ const layout = async ({children}:{children: ReactNode}) => {
 							<h1 className="text-2xl font-semibold">My Tasks</h1>
 						</div>
 						<div className="flex space-x-2 items-center">
+              <CreateProject />
 							<CreateTask />
 							<form action={signOut}>
 								<Button
