@@ -3,20 +3,45 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import Link from "next/link";
 import { ReactNode } from "react";
 import CreateTask from "./(task-board)/new-task";
+import { cookies } from "next/headers";
+import { createClient } from "@/utils/supabase/server";
+import signOut from "@/action/auth/sign-out";
+import SignIn from "@/components/auth/sign-in";
+import { ArrowBigRightIcon } from "lucide-react";
 
-const layout = ({children}:{children: ReactNode}) => {
+const layout = async ({children}:{children: ReactNode}) => {
+  const cookieStore = cookies()
+  const supabase = createClient(cookieStore)
+
+  const userData = await supabase.auth.getUser();
+
+  if (!userData.data.user) {
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <SignIn />
+      </div>
+    );
+  }
+
+
   return (
 			<main className="">
 				<div className="h-16 w-full flex items-center border-b">
-					<div className="container flex items-center justify-between">
+					<div className="px-6 w-full flex items-center justify-between">
 						<div>
 							<h1 className="text-2xl font-semibold">My Tasks</h1>
 						</div>
 						<div className="flex space-x-2 items-center">
 							<CreateTask />
-							<Button className="bg-blue-500 text-white px-4 py-2 rounded-md">
-								Log Out
-							</Button>
+							<form action={signOut}>
+								<Button
+									type="submit"
+									className="bg-red-600 flex items-center justify-center space-x-3 text-white px-4 py-2 rounded-md"
+								>
+                  <ArrowBigRightIcon size={24} />
+									<span>Log Out</span>
+								</Button>
+							</form>
 						</div>
 					</div>
 				</div>
