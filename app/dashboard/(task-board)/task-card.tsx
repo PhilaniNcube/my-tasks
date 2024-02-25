@@ -28,7 +28,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
 	return (
 		<Card
 			className={cn(
-				"bg-slate-100 border-2",
+				"bg-slate-100 border-2 cursor-grab",
 				draggedTask === task.id
 					? "opacity-50 animate-pulse pointer-events-none"
 					: "opacity-100",
