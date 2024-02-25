@@ -10,7 +10,7 @@ export async function getTaskNotes(task_id: number) {
         const taskNotesQuery =  supabase
           .from("notes")
           .select("text")
-          .eq("task_id", task_id)
+          .eq("task_id", task_id).order("created_at", {ascending: false})
 
 
           type TaskNotes = QueryData<typeof taskNotesQuery>
