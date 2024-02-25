@@ -53,16 +53,16 @@ const layout = async ({children}:{children: ReactNode}) => {
 					<aside className="w-[250px] border-r h-full">
 						<nav className="flex flex-col space-y-3 mt-3">
 							<Link
-								href="/dashboard?view=tasks"
-								className="px-4 py-2 font-medium"
-							>
-								Tasks
-							</Link>
-							<Link
 								href="/dashboard/projects"
 								className="px-4 py-2 font-medium"
 							>
 								Projects
+							</Link>
+							<Link
+								href="/dashboard?view=tasks"
+								className="px-4 py-2 font-medium"
+							>
+								Tasks
 							</Link>
 						</nav>
 					</aside>
