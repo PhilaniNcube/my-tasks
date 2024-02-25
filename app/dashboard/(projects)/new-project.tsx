@@ -29,7 +29,7 @@ const CreateProject = () => {
 				</Button>
 			</DialogTrigger>
 			<DialogContent>
-				<DialogTitle>Create Task</DialogTitle>
+				<DialogTitle>Create Project</DialogTitle>
 				<div className="w-full">
 					<form
 						action={async (formData: FormData) => {

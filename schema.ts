@@ -9,6 +9,35 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      notes: {
+        Row: {
+          created_at: string
+          id: string
+          task_id: number
+          text: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          task_id: number
+          text: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          task_id?: number
+          text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "public_notes_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "tasks"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -105,6 +134,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "public_tasks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "public_tasks_user_id_fkey"
             columns: ["user_id"]
