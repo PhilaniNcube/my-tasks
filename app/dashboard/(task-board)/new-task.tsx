@@ -31,12 +31,7 @@ type CreateTaskProps = {
 
 const CreateTask = ({projects}:CreateTaskProps) => {
 
-
-
-
 const {isOpen, toggleOpen} = useTaskModalStore()
-
-
 
   return (
 			<Dialog open={isOpen} onOpenChange={toggleOpen}>
@@ -48,6 +43,11 @@ const {isOpen, toggleOpen} = useTaskModalStore()
 				</DialogTrigger>
 				<DialogContent>
 					<DialogTitle>Create Task</DialogTitle>
+					{projects.length === 0 ? (
+					<div className="flex items-center justify-center">
+						<h1 className="text-2xl font-semibold">Create a project first</h1>
+					</div>
+					) : (
 					<div className="w-full">
 						<form
 							action={async (formData: FormData) => {
@@ -71,9 +71,10 @@ const {isOpen, toggleOpen} = useTaskModalStore()
 									</SelectTrigger>
 									<SelectContent>
 										{projects.map((project) => (
-                    <SelectItem key={project.id} value={project.id}>{project.title}</SelectItem>
-                    ))}
-
+											<SelectItem key={project.id} value={project.id}>
+												{project.title}
+											</SelectItem>
+										))}
 									</SelectContent>
 								</Select>
 							</div>
@@ -82,6 +83,7 @@ const {isOpen, toggleOpen} = useTaskModalStore()
 							</div>
 						</form>
 					</div>
+					) }
 				</DialogContent>
 			</Dialog>
 		);

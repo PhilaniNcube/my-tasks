@@ -6,9 +6,17 @@ export async function getProjects() {
           const cookieStore = cookies();
 				const supabase = createClient(cookieStore);
 
+        const user = await supabase.auth.getUser()
+
+        if (!user.data.user) {
+          return {
+            error: "User not found"
+          }
+        }
+
 				const projectsQuery = supabase
 					.from("projects")
-					.select("*")
+					.select("*").eq("user_id", user.data.user?.id)
 
 
           type Projects = QueryData<typeof projectsQuery>
