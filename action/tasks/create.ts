@@ -8,7 +8,8 @@ import {z} from "zod"
 
 const schema = z.object({
   title: z.string(),
-  description: z.string()
+  description: z.string(),
+  project: z.string()
 })
 
 type PrevState = {
@@ -22,7 +23,8 @@ const createTask = async ( formData:FormData) => {
 
   const validatedFields = schema.safeParse({
     title: formData.get("title"),
-    description: formData.get("description")
+    description: formData.get("description"),
+    project: formData.get("project")
   })
 
    console.log(validatedFields)
@@ -53,7 +55,8 @@ const createTask = async ( formData:FormData) => {
   const {data, error} = await supabase.from("tasks").insert({
     title: validatedFields.data.title,
     description: validatedFields.data.description,
-    user_id
+    user_id,
+    project_id: validatedFields.data.project
   }).select("*").single()
 
   console.log({data, error})

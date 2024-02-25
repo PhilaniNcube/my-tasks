@@ -15,6 +15,8 @@ const layout = async ({children}:{children: ReactNode}) => {
   const supabase = createClient(cookieStore)
 
   const userData = await supabase.auth.getUser();
+  const {data: projects, error } = await supabase.from('projects').select('*')
+
 
   if (!userData.data.user) {
     return (
@@ -33,14 +35,14 @@ const layout = async ({children}:{children: ReactNode}) => {
 							<h1 className="text-2xl font-semibold">My Tasks</h1>
 						</div>
 						<div className="flex space-x-2 items-center">
-              <CreateProject />
-							<CreateTask />
+							<CreateProject />
+							{projects ? <CreateTask projects={projects} /> : null}
 							<form action={signOut}>
 								<Button
 									type="submit"
 									className="bg-red-600 flex items-center justify-center space-x-3 text-white px-4 py-2 rounded-md"
 								>
-                  <ArrowBigRightIcon size={24} />
+									<ArrowBigRightIcon size={24} />
 									<span>Log Out</span>
 								</Button>
 							</form>
