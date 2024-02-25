@@ -11,10 +11,10 @@ import { createClient } from "@/utils/supabase/client";
 import { revalidatePath } from "next/cache";
 import { useRouter } from "next/navigation";
 
+
 type ColumnProps = {
 	status: Database["public"]["Enums"]["Status"];
 	tasks: Database["public"]["Tables"]["tasks"]["Row"][];
-
 };
 
 const Column = ({ status, tasks }: ColumnProps) => {

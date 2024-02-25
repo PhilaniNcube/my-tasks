@@ -2,16 +2,17 @@
 
 import { Database } from "@/schema";
 import Column from "./column";
-import { useOptimistic } from "react";
 
-type Task = Database["public"]["Tables"]["tasks"]["Row"];
+
 
 
 type BoardProps = {
-  tasks: Database["public"]["Tables"]["tasks"]["Row"][];
+  tasks: Database["public"]["Tables"]["tasks"]['Row'][];
 };
 
 const Board = ({ tasks }: BoardProps) => {
+
+  console.log(tasks)
 
 
 	return (

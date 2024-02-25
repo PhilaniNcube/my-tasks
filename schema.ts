@@ -78,6 +78,7 @@ export type Database = {
           created_at: string
           description: string
           id: number
+          project_id: string | null
           status: Database["public"]["Enums"]["Status"]
           title: string
           updated_at: string | null
@@ -87,6 +88,7 @@ export type Database = {
           created_at?: string
           description: string
           id?: number
+          project_id?: string | null
           status?: Database["public"]["Enums"]["Status"]
           title: string
           updated_at?: string | null
@@ -96,6 +98,7 @@ export type Database = {
           created_at?: string
           description?: string
           id?: number
+          project_id?: string | null
           status?: Database["public"]["Enums"]["Status"]
           title?: string
           updated_at?: string | null

@@ -9,11 +9,12 @@ import { Database } from "@/schema";
 import { useTaskStore } from "@/stores/taskStore";
 import { format } from "date-fns";
 import { CheckIcon, HourglassIcon } from "lucide-react";
-import { useOptimistic, useState } from "react";
+import Link from "next/link";
+import { useState } from "react";
+
 
 type TaskCardProps = {
 	task: Database["public"]["Tables"]["tasks"]["Row"];
-
 };
 
 const TaskCard = ({ task }: TaskCardProps) => {
@@ -80,7 +81,12 @@ const TaskCard = ({ task }: TaskCardProps) => {
 				<CardTitle className="text-lg">{task.title}</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<p className="text-sm">{task.description}</p>
+				<p className="text-sm mb-4">{task.description}</p>
+        <Link className="" prefetch={false} href={`/dashboard/tasks/${task.id}`}>
+          <Button type="button" size="sm">
+            View Task
+          </Button>
+        </Link>
 			</CardContent>
 			<CardFooter>
 				{task.updated_at !== null ? (

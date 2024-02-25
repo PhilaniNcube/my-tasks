@@ -1,25 +1,14 @@
-import { Database } from "@/schema";
 import Board from "./(task-board)/board";
-import { cookies } from "next/headers";
-import { createClient } from "@/utils/supabase/server";
-
-
+import { getTasks } from "@/utils/fetchers/tasks";
 
 const Dashboard = async () => {
 
-        const cookieStore = cookies();
-				const supabase = createClient(cookieStore);
+    const taskData = await getTasks()
 
-				const { data: tasks, error } = await supabase
-					.from("tasks")
-					.select("*")
-					.order("updated_at", { ascending: false });
-
-				return (
-					<div>
-            {tasks && <Board tasks={tasks} />}
-						{/* <Board /> */}
-					</div>
+		return (
+			<div>
+        {taskData.tasks && <Board tasks={taskData.tasks} />}
+			</div>
 				);
 };
 export default Dashboard;
