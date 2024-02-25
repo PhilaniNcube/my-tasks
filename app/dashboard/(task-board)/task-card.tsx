@@ -29,23 +29,30 @@ const TaskCard = ({ task }: TaskCardProps) => {
 		<Card
 			className={cn(
 				"bg-slate-100 border-2",
-				draggedTask === task.id ? "opacity-50 animate-pulse pointer-events-none" : "opacity-100",
+				draggedTask === task.id
+					? "opacity-50 animate-pulse pointer-events-none"
+					: "opacity-100",
 				task.status === "Completed"
 					? "border-green-600"
 					: task.status === "In Progress"
 					  ? "border-sky-600"
 					  : "border-orange-300",
-
 			)}
 			draggable={true}
-      onDrag={() => dragTask(task.id)}
+			onDrag={() => dragTask(task.id)}
 			id={`${task.id}`}
 		>
-			<CardHeader
-				className={cn(
-					"",
-				)}
-			>
+			<CardHeader className={cn("flex justify-between w-full flex-row items-center")}>
+				{" "}
+				<Link
+					className=""
+					prefetch={false}
+					href={`/dashboard/tasks/${task.id}`}
+				>
+					<Button type="button" size="sm">
+						View Task
+					</Button>
+				</Link>
 				<div className="flex space-x-2 w-full justify-end items-end">
 					<Button
 						onClick={async () => {
@@ -78,15 +85,10 @@ const TaskCard = ({ task }: TaskCardProps) => {
 						<CheckIcon size={24} />
 					</Button>
 				</div>
-				<CardTitle className="text-lg">{task.title}</CardTitle>
 			</CardHeader>
 			<CardContent>
+				<CardTitle className="text-lg">{task.title}</CardTitle>
 				<p className="text-sm mb-4">{task.description}</p>
-        <Link className="" prefetch={false} href={`/dashboard/tasks/${task.id}`}>
-          <Button type="button" size="sm">
-            View Task
-          </Button>
-        </Link>
 			</CardContent>
 			<CardFooter>
 				{task.updated_at !== null ? (
