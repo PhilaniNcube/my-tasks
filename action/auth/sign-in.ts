@@ -45,7 +45,7 @@ export  async function signIn(prevState: any, formData:FormData) {
 
 
 
-  return { message: "User created, please check your email address for a confirmation email", data }
+  return { message: "Signed in", data }
 
 
 }

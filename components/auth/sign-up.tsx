@@ -16,7 +16,11 @@ export default function SignUp() {
 
  const [state, formAction] = useFormState(signUp, initialState);
 
-if (state.data) {
+ if(state.data === null) {
+    toast(state.message)
+ }
+
+if (state.data?.user) {
     toast(state.message);
   }
 
