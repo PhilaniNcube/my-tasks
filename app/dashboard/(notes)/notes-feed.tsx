@@ -32,9 +32,10 @@ export const NotesFeed = ({task_id, notes}: {task_id:number, notes:Note[]}) => {
 					{optimisticNotes.map((note, k) => (
 						// biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
 						<article key={k} className="flex flex-col space-y-4">
-							<div className="p-4 my-2 border border-slate-200 shadow rounded-md">
+							<div className="p-4 my-2 shadow odd:bg-slate-100 rounded-md">
                 <p className="">{note.text}</p>
 							</div>
+              <Separator />
 						</article>
 					))}
 				</div>
@@ -48,9 +49,6 @@ export const NotesFeed = ({task_id, notes}: {task_id:number, notes:Note[]}) => {
 						await createNewNote(formData);
 						formRef.current?.reset();
 						router.refresh();
-						// revalidatePath(`dashboard/tasks/${task_id}`);
-
-						// console.log({errors, note})
 					}}
 				>
 					<h2 className="text-2xl mb-2 font-medium">Add a note</h2>

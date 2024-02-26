@@ -8,7 +8,7 @@ export async function getTasks() {
 
         const tasksQuery = supabase
           .from("tasks")
-          .select("*")
+          .select("*").order("updated_at", {ascending: false})
 
          type Tasks = QueryData<typeof tasksQuery>
 
@@ -56,26 +56,26 @@ export async function getTask(id: number) {
 
 
 export async function getTasksByProjectId(project_id: string) {
-          const cookieStore = cookies();
+        const cookieStore = cookies();
         const supabase = createClient(cookieStore);
 
         const tasksQuery = supabase
           .from("tasks")
           .select("*")
-          .eq("project_id", project_id)
+          .eq("project_id", project_id).order("updated_at", {ascending: false})
 
-         type Tasks = QueryData<typeof tasksQuery>
+        type Tasks = QueryData<typeof tasksQuery>
 
-          const { data: tasks, error } = await tasksQuery
+        const { data: tasks, error } = await tasksQuery
 
-          if (error) {
-            return {
-               error : error.message
+        if (error) {
+          return {
+              error : error.message
             }
           }
 
-          return {
-             tasks
-          }
+        return {
+          tasks
+        }
 
 }
