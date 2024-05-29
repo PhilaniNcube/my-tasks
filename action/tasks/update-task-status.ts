@@ -1,6 +1,6 @@
 "use server"
 
-import { Database } from "@/schema";
+import type{ Database } from "@/schema";
 
 import { createClient } from "@/utils/supabase/server";
 import { format } from "date-fns";

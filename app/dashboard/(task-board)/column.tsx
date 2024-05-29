@@ -2,7 +2,7 @@
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { Database } from "@/schema";
+import type { Database } from "@/schema";
 import { Scroll } from "lucide-react";
 import TaskCard from "./task-card";
 import { useMemo } from "react";
@@ -34,7 +34,7 @@ const Column = ({ status, tasks }: ColumnProps) => {
   const draggedTask = useTaskStore(state => state.draggedTask)
   const dragTask = useTaskStore(state => state.dragTask)
 
-  const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
+  const handleDrop = async(e: React.DragEvent<HTMLDivElement>) => {
     const now = new Date().toUTCString();
     if(!draggedTask) return;
     updateTaskStatus(draggedTask, status);

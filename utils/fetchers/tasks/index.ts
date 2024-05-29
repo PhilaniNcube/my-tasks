@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import { QueryData } from "@supabase/supabase-js";
+import  type{ QueryData } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 
 export async function getTasks() {
@@ -8,7 +8,7 @@ export async function getTasks() {
 
         const tasksQuery = supabase
           .from("tasks")
-          .select("*").order("updated_at", {ascending: false})
+          .select("*").eq('archived', false).order("updated_at", {ascending: false})
 
          type Tasks = QueryData<typeof tasksQuery>
 

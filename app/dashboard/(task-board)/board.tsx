@@ -1,6 +1,6 @@
 "use client"
 
-import { Database } from "@/schema";
+import type { Database } from "@/schema";
 import Column from "./column";
 
 

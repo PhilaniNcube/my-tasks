@@ -1,16 +1,18 @@
 "use client"
 
+import { archiveTask } from "@/action/tasks/archive";
 import updateTaskStatus from "@/action/tasks/update-task-status";
 import completeTask from "@/action/tasks/update-task-status";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
-import { Database } from "@/schema";
+import type { Database } from "@/schema";
 import { useTaskStore } from "@/stores/taskStore";
 import { format } from "date-fns";
-import { CheckIcon, HourglassIcon } from "lucide-react";
+import { CheckIcon, HourglassIcon, TimerOff } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { startTransition, useState } from "react";
 
 
 type TaskCardProps = {
@@ -20,6 +22,7 @@ type TaskCardProps = {
 const TaskCard = ({ task }: TaskCardProps) => {
 
   const [pending, setPending] = useState(false)
+  const router = useRouter()
 
   const dragTask = useTaskStore(state => state.dragTask)
   const draggedTask = useTaskStore(state => state.draggedTask)
@@ -35,14 +38,16 @@ const TaskCard = ({ task }: TaskCardProps) => {
 				task.status === "Completed"
 					? "border-green-600"
 					: task.status === "In Progress"
-					  ? "border-sky-600"
-					  : "border-orange-300",
+						? "border-sky-600"
+						: "border-orange-300",
 			)}
 			draggable={true}
 			onDrag={() => dragTask(task.id)}
 			id={`${task.id}`}
 		>
-			<CardHeader className={cn("flex justify-between w-full flex-row items-center")}>
+			<CardHeader
+				className={cn("flex justify-between w-full flex-row items-center")}
+			>
 				{" "}
 				<Link
 					className=""
@@ -92,9 +97,37 @@ const TaskCard = ({ task }: TaskCardProps) => {
 			</CardContent>
 			<CardFooter>
 				{task.updated_at !== null ? (
-					<small>Updated On: {format(task.updated_at, "Pp")}</small>
+					<div className="flex justify-between items-center w-full">
+						<small>Updated On: {format(task.updated_at, "Pp")}</small>
+						<form
+							action={() => {
+								startTransition(() => {
+									archiveTask(task.id);
+                  router.refresh()
+								});
+							}}
+						>
+							<Button variant="outline" size="sm">
+								Archive <TimerOff />
+							</Button>
+						</form>
+					</div>
 				) : (
-					<small>Created On: {format(task.created_at, "Pp")}</small>
+					<div className="flex justify-between items-center w-full">
+						<small>Created On: {format(task.created_at, "Pp")}</small>
+						<form
+							action={() => {
+								startTransition(() => {
+									archiveTask(task.id);
+                  router.refresh();
+								});
+							}}
+						>
+							<Button variant="outline" size="sm">
+								Archive <TimerOff />
+							</Button>
+						</form>
+					</div>
 				)}
 			</CardFooter>
 		</Card>
